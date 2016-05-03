@@ -37,10 +37,10 @@ def make_link(G, node1, node2):
     (G[node2])[node1] = 1
     return G
 
-def analyze_ring_graph():
+def analyze_ring_graph(numberOfNodes):
     #Make an empty graph
     a_ring = {}
-    n=5
+    n=numberOfNodes
 
     #Add in the edges
     for i in range(n):
@@ -53,3 +53,44 @@ def analyze_ring_graph():
     print(sum([len(a_ring[node]) for node in a_ring.keys()])/2)
     print(a_ring)
 
+
+def analyze_square_grid_graph(numberOfNodes):
+    #Make an empty graph
+    a_grid = {}
+    n=numberOfNodes
+
+    #Add in the edges
+    for i in range(n):
+        make_link(a_grid, i, (i+1)%n)
+
+    #How many nodes?
+    print("Total Nodes: ", len(a_grid))
+    print("Total Nodes on each side: ", n/4)
+    print("Total Nodes * 2: ", n*2)
+    print("Total Nodes * 2 minus 2 * edge nodes, +1: ", (n*2) - (2*(n/4)) + 1)
+    
+    #How many edges?  Each will have 2 connections, except the right hand
+    # and the bottom edges.  They will each have 1, and the final node will have 0
+    edgeNodes = n/4
+    print(sum([len(a_grid[node]) for node in a_grid.keys()])-(2*edgeNodes)-2)
+    print(a_grid)
+
+
+import math
+def square_graph_solution(numberOfNodes):
+    #Make an empty graph
+    G = {}
+    n = numberOfNodes
+    side = int(math.sqrt(n))
+
+    #Add in the edges
+    for i in range(side):
+        for j in range(side):
+            if i < side-1: make_link(G, (i,j), (i+1,j))
+            if j < side-1: make_link(G, (i,j), (i,j+1))
+
+    #How many nodes?
+    print(len(G))
+
+    #How many edges?
+    print(sum([len(G[node]) for node in G.keys()])/2)
